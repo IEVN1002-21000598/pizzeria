@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http'; // Importa esto
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -64,8 +59,11 @@ export class ApiserviceService {
       total_nombre.push({nombre, sub, fecha})
     });
 
+    console.log(data)
     const compras = JSON.parse(localStorage.getItem('compras') || '[]');
     compras.push({ id, total, total_nombre, items: data });
+
+    console.log(compras)
 
     localStorage.setItem('compras', JSON.stringify(compras));
     localStorage.removeItem('pedidos');
@@ -73,11 +71,9 @@ export class ApiserviceService {
     return true
   }
 
-
-
   recuperarCompras_dia(fecha:any):any{
     const compras = JSON.parse(localStorage.getItem('compras') || '[]');
-    console.log(compras)
+    // console.log(compras)
 
     const subtotalPorNombreArray: { nombre: string; sub: number }[] = [];
 
@@ -94,10 +90,10 @@ export class ApiserviceService {
     compras.forEach((item: any) => {
       item.total_nombre.forEach((nombreItem: any) => {
         // console.log(item.id)
-        console.log('nombreItem.fecha')
-        console.log(nombreItem.fecha)
-        console.log('fechaHoy')
-        console.log(fechaHoy)
+        // console.log('nombreItem.fecha')
+        // console.log(nombreItem.fecha)
+        // console.log('fechaHoy')
+        // console.log(fechaHoy)
         if (nombreItem.fecha === fechaHoy) {
           total_total += nombreItem.sub;
           const existingEntry = subtotalPorNombreArray.find(entry => entry.nombre === nombreItem.nombre);
@@ -116,7 +112,7 @@ export class ApiserviceService {
 
   recuperarCompras_mes(fecha:any):any{
     const compras = JSON.parse(localStorage.getItem('compras') || '[]');
-    console.log(compras)
+    // console.log(compras)
 
     const subtotalPorNombreArray: { nombre: string; sub: number }[] = [];
 
@@ -127,15 +123,15 @@ export class ApiserviceService {
     else mes = fecha ;
 
 
-    console.log('mes:')
-    console.log(mes)
+    // console.log('mes:')
+    // console.log(mes)
 
     let total_total = 0;
     compras.forEach((item: any) => {
       item.total_nombre.forEach((nombreItem: any) => {
         const añoMesItem = nombreItem.fecha.slice(5, 7);
-        console.log('añoMesItem:')
-        console.log(añoMesItem)
+        // console.log('añoMesItem:')
+        // console.log(añoMesItem)
         if (añoMesItem === mes) {
           total_total += nombreItem.sub;
           const existingEntry = subtotalPorNombreArray.find(entry => entry.nombre === nombreItem.nombre);
